@@ -55,7 +55,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor(white: 0.85, alpha: 1)
+        self.view.backgroundColor = UIColor(red: 0.255, green: 0.573, blue: 0.863, alpha: 1)
         self.view.addSubview(priceView)
         self.view.addSubview(collectionView)
         collectionView.addSubview(imageView)
@@ -96,6 +96,10 @@ class ViewController: UIViewController {
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alertController.addAction(cancelAction)
         present(alertController, animated: true, completion: nil)
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
 }
 
