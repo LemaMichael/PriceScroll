@@ -1,5 +1,5 @@
 # PriceScroll
-Mimics the price alert view from the Coinbase App
+A recreation of the price alert from the Coinbase App
 
  # Demo
 <p align="center">
