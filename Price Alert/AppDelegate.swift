@@ -21,9 +21,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //window?.rootViewController = UINavigationController(rootViewController: HomeViewController())
         //window?.rootViewController = UINavigationController(rootViewController: WelcomeViewController())
         window?.rootViewController = ViewController()
-        #if DEBUG
-        Bundle(path: "/Applications/InjectionIII.app/Contents/Resources/iOSInjection.bundle")?.load()
-        #endif
         return true
     }
 
