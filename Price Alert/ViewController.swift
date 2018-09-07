@@ -24,6 +24,12 @@ class ViewController: UIViewController {
         return collectionView
     }()
 
+    let imageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = #imageLiteral(resourceName: "Triangle")
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .gray
@@ -32,7 +38,11 @@ class ViewController: UIViewController {
             self.collectionView.contentInsetAdjustmentBehavior = .never
         } else {
             self.automaticallyAdjustsScrollViewInsets = false
-        }
+        }       
+        collectionView.addSubview(imageView)
+        imageView.anchor(top: collectionView.topAnchor, bottom: nil, left: nil, right: nil, paddingTop: -1, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 30, height: 15)
+        imageView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        
         collectionView.anchor(top: nil, bottom: self.view.bottomAnchor, left: self.view.leftAnchor, right: self.view.rightAnchor, paddingTop: 0, paddingBottom: -50, paddingLeft: 0, paddingRight: 0, width: 0, height: 79)
         
     }
