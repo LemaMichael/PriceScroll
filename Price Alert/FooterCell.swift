@@ -1,5 +1,5 @@
 //
-//  AlertCell.swift
+//  FooterCell.swift
 //  Price Alert
 //
 //  Created by Michael Lema on 9/6/18.
@@ -9,22 +9,20 @@
 import Foundation
 import UIKit
 
-class AlertCell: UICollectionViewCell {
+class FooterCell: UICollectionReusableView {
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupCell()
+        setupView()
     }
-    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    let tickerView = genericTopTickerView()
-    let bottomTickerView = genericBottomTickerView()
+    let topTickView = ReusableEndTopTick()
+    let bottomTickView = ReusableEndBottomTick()
     let label: UILabel = {
-        //: W = 29 , H = 18
         let label = UILabel()
-        label.text = ""
+        label.text = "" //: This text will be double the current price
         label.font = UIFont(name: "Avenir-Book", size: 12)
         label.textColor = .white
         label.textAlignment = .center
@@ -32,30 +30,30 @@ class AlertCell: UICollectionViewCell {
         return label
     }()
     
-    func setupCell() {
-        addSubview(tickerView)
-        addSubview(bottomTickerView)
+    func setupView() {
+        addSubview(topTickView)
         addSubview(label)
-        tickerView.anchor(top: topAnchor, bottom: nil, left: leftAnchor, right: rightAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 20)
+        addSubview(bottomTickView)
+        
+        topTickView.anchor(top: topAnchor, bottom: nil, left: leftAnchor, right: rightAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 20)
+        
         label.anchor(top: nil, bottom: nil, left: nil, right: nil, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 29, height: 18)
         label.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         label.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         
-        bottomTickerView.anchor(top: nil, bottom: bottomAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 20)
-        
+        bottomTickView.anchor(top: nil, bottom: bottomAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 20)
     }
+    
 }
 
-class genericTopTickerView: UIView {
+class ReusableEndTopTick: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
     }
-    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
     let firstTick: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.white
@@ -71,44 +69,25 @@ class genericTopTickerView: UIView {
         view.backgroundColor = UIColor.white
         return view
     }()
-    let fourthTick: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor.white
-        return view
-    }()
-    let fifthTick: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor.white
-        return view
-    }()
-    
     
     func setupView() {
         addSubview(firstTick)
         addSubview(secondTick)
         addSubview(middleTick)
-        addSubview(fourthTick)
-        addSubview(fifthTick)
-        
         firstTick.anchor(top: topAnchor, bottom: nil, left: leftAnchor, right: nil, paddingTop: 0, paddingBottom: 0, paddingLeft: 4, paddingRight: 0, width: 1, height: 14)
         secondTick.anchor(top: topAnchor, bottom: nil, left: firstTick.rightAnchor, right: nil, paddingTop: 0, paddingBottom: 0, paddingLeft: 8, paddingRight: 0, width: 1, height: 14)
         middleTick.anchor(top: topAnchor, bottom: nil, left: secondTick.rightAnchor, right: nil, paddingTop: 0, paddingBottom: 0, paddingLeft: 8, paddingRight: 0, width: 1, height: 20)
-        fourthTick.anchor(top: topAnchor, bottom: nil, left: middleTick.rightAnchor, right: nil, paddingTop: 0, paddingBottom: 0, paddingLeft: 8, paddingRight: 0, width: 1, height: 14)
-        fifthTick.anchor(top: topAnchor, bottom: nil, left: fourthTick.rightAnchor, right: nil, paddingTop: 0, paddingBottom: 0, paddingLeft: 8, paddingRight: 4, width: 1, height: 14)
-
     }
 }
 
-class genericBottomTickerView: UIView {
+class ReusableEndBottomTick: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
     }
-    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
     let firstTick: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.white
@@ -124,30 +103,13 @@ class genericBottomTickerView: UIView {
         view.backgroundColor = UIColor.white
         return view
     }()
-    let fourthTick: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor.white
-        return view
-    }()
-    let fifthTick: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor.white
-        return view
-    }()
-    
     
     func setupView() {
         addSubview(firstTick)
         addSubview(secondTick)
         addSubview(middleTick)
-        addSubview(fourthTick)
-        addSubview(fifthTick)
-        
         firstTick.anchor(top: nil, bottom: bottomAnchor, left: leftAnchor, right: nil, paddingTop: 0, paddingBottom: 0, paddingLeft: 4, paddingRight: 0, width: 1, height: 14)
         secondTick.anchor(top: nil, bottom: bottomAnchor, left: firstTick.rightAnchor, right: nil, paddingTop: 0, paddingBottom: 0, paddingLeft: 8, paddingRight: 0, width: 1, height: 14)
         middleTick.anchor(top: nil, bottom: bottomAnchor, left: secondTick.rightAnchor, right: nil, paddingTop: 0, paddingBottom: 0, paddingLeft: 8, paddingRight: 0, width: 1, height: 20)
-        fourthTick.anchor(top: nil, bottom: bottomAnchor, left: middleTick.rightAnchor, right: nil, paddingTop: 0, paddingBottom: 0, paddingLeft: 8, paddingRight: 0, width: 1, height: 14)
-        fifthTick.anchor(top: nil, bottom: bottomAnchor, left: fourthTick.rightAnchor, right: nil, paddingTop: 0, paddingBottom: 0, paddingLeft: 8, paddingRight: 4, width: 1, height: 14)
-        
     }
 }
