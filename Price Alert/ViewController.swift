@@ -12,16 +12,17 @@ class ViewController: UIViewController {
     let cellID = "cellID"
     let firstCell = "firstCellID"
     let lastCell = "lastCellID"
-    let currentPrice: Double = 250
-    
-    var label = UILabel()
+    let currentPrice: Double = 6450
+    let currency = "$"
+    let grayColor = UIColor(red: 0.89, green: 0.89, blue: 0.89, alpha: 1)
+    let blueColor = UIColor(red: 0.024, green: 0.404, blue: 0.816, alpha: 1)
     
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
 
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = UIColor(red: 0, green: 0.357, blue: 0.584, alpha: 1)
+        collectionView.backgroundColor = blueColor
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.isPagingEnabled = false
         collectionView.register(AlertCell.self, forCellWithReuseIdentifier: cellID)
@@ -36,42 +37,41 @@ class ViewController: UIViewController {
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
+    let priceView = PriceView()
+    lazy var middleItem: Int = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .gray
         self.view.addSubview(collectionView)
+        self.view.addSubview(priceView)
+        collectionView.addSubview(imageView)
+
         if #available(iOS 11.0, *) {
             self.collectionView.contentInsetAdjustmentBehavior = .never
         } else {
             self.automaticallyAdjustsScrollViewInsets = false
         }       
-        collectionView.addSubview(imageView)
         imageView.anchor(top: collectionView.topAnchor, bottom: nil, left: nil, right: nil, paddingTop: -1, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 30, height: 15)
         imageView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor, constant: 0).isActive = true
         
         collectionView.anchor(top: nil, bottom: self.view.bottomAnchor, left: self.view.leftAnchor, right: self.view.rightAnchor, paddingTop: 0, paddingBottom: -50, paddingLeft: 0, paddingRight: 0, width: 0, height: 79)
-      
 
         collectionView.dataSource = self
         collectionView.delegate = self
         //        self.collectionView.reloadData() //: Testing purposes
         
-        view.addSubview(label)
-        label.anchor(top: nil, bottom: nil, left: view.leftAnchor, right: view.rightAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 100)
-        label.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        label.textAlignment = .center
-        view.addSubview(label)
+        priceView.priceLabel.text = currency + String(format: "%.0f", currentPrice)
+        priceView.anchor(top: nil, bottom: collectionView.topAnchor, left: view.leftAnchor, right: view.rightAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 90)
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             let totalNumberOfItems = self.collectionView.numberOfItems(inSection: 0)
-            self.collectionView.scrollToItem(at: IndexPath(item: Int(totalNumberOfItems / 2), section: 0), at: .centeredHorizontally, animated: false)
+            self.middleItem = totalNumberOfItems / 2
+            print(self.middleItem)
+            self.collectionView.scrollToItem(at: IndexPath(item: self.middleItem, section: 0), at: .centeredHorizontally, animated: false)
         }
+        
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
 }
 
 extension ViewController: UICollectionViewDelegateFlowLayout {
@@ -105,6 +105,7 @@ extension ViewController: UICollectionViewDataSource {
             return cell
         default:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! AlertCell
+            cell.selectedTick.isHidden = (indexPath.item == self.middleItem) ? false: true
             cell.label.text = "\(indexPath.item * 5 )"
             return cell
         }
@@ -116,20 +117,28 @@ extension ViewController {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         findCenterIndex()
     }
+    fileprivate func modifyPriceView(_ validIndex: IndexPath) {
+        priceView.belowLabel.textColor = (self.middleItem > validIndex[1]) ? self.blueColor : self.grayColor
+        priceView.divider.backgroundColor = (self.middleItem > validIndex[1]) ? self.blueColor : self.grayColor
+        priceView.aboveLabel.textColor = (self.middleItem < validIndex[1]) ? self.blueColor : self.grayColor
+        priceView.divider2.backgroundColor = (self.middleItem < validIndex[1]) ? self.blueColor : self.grayColor
+    }
+    
     private func findCenterIndex() {
         let center = self.view.convert(self.collectionView.center, to: self.collectionView)
         let index = collectionView.indexPathForItem(at: center)
         print(index ?? "index not found")
-        guard let validIndex = index else { return}
+        guard let validIndex = index else { return }
+        modifyPriceView(validIndex)
         switch validIndex.item {
         case 0:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: firstCell, for: validIndex) as! FirstCell
-            label.text = cell.label.text
+            priceView.priceLabel.text =  currency + (cell.label.text ?? "")
         case self.collectionView.numberOfItems(inSection: 0) - 1:
-            label.text = String(format: "%.0f", currentPrice * 2)
+            priceView.priceLabel.text = currency + String(format: "%.0f", currentPrice * 2)
         default:
             if let cell = collectionView.cellForItem(at: validIndex) as? AlertCell {
-                label.text = cell.label.text
+                priceView.priceLabel.text = currency + (cell.label.text ?? "")
             }
         }
     }
