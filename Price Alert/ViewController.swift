@@ -10,8 +10,8 @@ import UIKit
 
 class ViewController: UIViewController {
     let cellID = "cellID"
-    let headerID = "header"
-    let footerID = "foorter"
+    let firstCell = "firstCellID"
+    let lastCell = "lastCellID"
     let currentPrice: Double = 25
     
     var label = UILabel()
@@ -25,9 +25,8 @@ class ViewController: UIViewController {
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.isPagingEnabled = false
         collectionView.register(AlertCell.self, forCellWithReuseIdentifier: cellID)
-        collectionView.register(HeaderCell.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerID)
-        collectionView.register(FooterCell.self, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, withReuseIdentifier: footerID)
-
+        collectionView.register(FirstCell.self, forCellWithReuseIdentifier: firstCell)
+        collectionView.register(LastCell.self, forCellWithReuseIdentifier: lastCell)
         return collectionView
     }()
 
@@ -84,12 +83,6 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: 45, height: 79)
-    }
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        return CGSize(width: 45, height: 79)
-    }
 //    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
 //        let totalCellWidth = 45 * collectionView.numberOfItems(inSection: 0)
 //        let totalSpacingWidth = 60
@@ -105,30 +98,24 @@ extension ViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let intervals = currentPrice * 2 / 5
     
-        return Int(intervals - 1) //: Subtract one since we have a footer that accounts for the last interval
+        return Int(intervals + 1) //: Add one since need an extra cell for that accounts for the last interval
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! AlertCell
-        cell.label.text = "\(5 + indexPath.item * 5 )"
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        switch kind {
-
-        case UICollectionElementKindSectionHeader:
-            let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerID, for: indexPath) as! HeaderCell
-            return headerView
-            
-        case UICollectionElementKindSectionFooter:
-            let footerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: footerID, for: indexPath) as! FooterCell
-            footerView.label.text = String(format: "%.0f", currentPrice * 2)
-            return footerView
-
+        switch indexPath.item {
+        case 0:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: firstCell, for: indexPath) as! FirstCell
+            return cell
+        case Int(currentPrice * 2 / 5):
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: lastCell, for: indexPath) as! LastCell
+            cell.label.text = String(format: "%.0f", currentPrice * 2)
+            return cell
         default:
-            return UICollectionReusableView()
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! AlertCell
+            cell.label.text = "\(indexPath.item * 5 )"
+            return cell
         }
     }
+    
 }
 
 extension ViewController {

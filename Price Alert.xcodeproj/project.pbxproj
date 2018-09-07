@@ -14,8 +14,8 @@
 		4C5715A12141EFC900E06AAA /* TestInject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5715A02141EFC900E06AAA /* TestInject.swift */; };
 		4C5715A32141EFF200E06AAA /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5715A22141EFF200E06AAA /* Extension.swift */; };
 		4C5715A52141F17F00E06AAA /* AlertCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5715A42141F17F00E06AAA /* AlertCell.swift */; };
-		4C5715A72142181C00E06AAA /* HeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5715A62142181C00E06AAA /* HeaderCell.swift */; };
-		4C5715A92142182400E06AAA /* FooterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5715A82142182400E06AAA /* FooterCell.swift */; };
+		4C5715A72142181C00E06AAA /* FirstCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5715A62142181C00E06AAA /* FirstCell.swift */; };
+		4C5715A92142182400E06AAA /* LastCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5715A82142182400E06AAA /* LastCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,8 +28,8 @@
 		4C5715A02141EFC900E06AAA /* TestInject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestInject.swift; sourceTree = "<group>"; };
 		4C5715A22141EFF200E06AAA /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		4C5715A42141F17F00E06AAA /* AlertCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertCell.swift; sourceTree = "<group>"; };
-		4C5715A62142181C00E06AAA /* HeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderCell.swift; sourceTree = "<group>"; };
-		4C5715A82142182400E06AAA /* FooterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FooterCell.swift; sourceTree = "<group>"; };
+		4C5715A62142181C00E06AAA /* FirstCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstCell.swift; sourceTree = "<group>"; };
+		4C5715A82142182400E06AAA /* LastCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,8 +65,8 @@
 				4C57158E2141EF5A00E06AAA /* AppDelegate.swift */,
 				4C5715902141EF5A00E06AAA /* ViewController.swift */,
 				4C5715A42141F17F00E06AAA /* AlertCell.swift */,
-				4C5715A62142181C00E06AAA /* HeaderCell.swift */,
-				4C5715A82142182400E06AAA /* FooterCell.swift */,
+				4C5715A62142181C00E06AAA /* FirstCell.swift */,
+				4C5715A82142182400E06AAA /* LastCell.swift */,
 				4C5715952141EF5B00E06AAA /* Assets.xcassets */,
 				4C5715972141EF5B00E06AAA /* LaunchScreen.storyboard */,
 				4C57159A2141EF5B00E06AAA /* Info.plist */,
@@ -149,9 +149,9 @@
 				4C5715912141EF5A00E06AAA /* ViewController.swift in Sources */,
 				4C57158F2141EF5A00E06AAA /* AppDelegate.swift in Sources */,
 				4C5715A12141EFC900E06AAA /* TestInject.swift in Sources */,
-				4C5715A92142182400E06AAA /* FooterCell.swift in Sources */,
+				4C5715A92142182400E06AAA /* LastCell.swift in Sources */,
 				4C5715A52141F17F00E06AAA /* AlertCell.swift in Sources */,
-				4C5715A72142181C00E06AAA /* HeaderCell.swift in Sources */,
+				4C5715A72142181C00E06AAA /* FirstCell.swift in Sources */,
 				4C5715A32141EFF200E06AAA /* Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
