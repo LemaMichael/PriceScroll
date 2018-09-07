@@ -12,7 +12,7 @@ class ViewController: UIViewController {
     let cellID = "cellID"
     let firstCell = "firstCellID"
     let lastCell = "lastCellID"
-    let currentPrice: Double = 25
+    let currentPrice: Double = 250
     
     var label = UILabel()
     
@@ -47,8 +47,7 @@ class ViewController: UIViewController {
         }       
         collectionView.addSubview(imageView)
         imageView.anchor(top: collectionView.topAnchor, bottom: nil, left: nil, right: nil, paddingTop: -1, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 30, height: 15)
-        //imageView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
-        imageView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor, constant: 15).isActive = true
+        imageView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor, constant: 0).isActive = true
         
         collectionView.anchor(top: nil, bottom: self.view.bottomAnchor, left: self.view.leftAnchor, right: self.view.rightAnchor, paddingTop: 0, paddingBottom: -50, paddingLeft: 0, paddingRight: 0, width: 0, height: 79)
       
@@ -57,21 +56,20 @@ class ViewController: UIViewController {
         collectionView.delegate = self
         //        self.collectionView.reloadData() //: Testing purposes
         
-        label = UILabel(frame: CGRect(x: view.center.x, y: view.center.y, width: 100, height: 100))
-        
+        view.addSubview(label)
+        label.anchor(top: nil, bottom: nil, left: view.leftAnchor, right: view.rightAnchor, paddingTop: 0, paddingBottom: 0, paddingLeft: 0, paddingRight: 0, width: 0, height: 100)
+        label.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         label.textAlignment = .center
         view.addSubview(label)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            let totalNumberOfItems = self.collectionView.numberOfItems(inSection: 0)
+            self.collectionView.scrollToItem(at: IndexPath(item: Int(totalNumberOfItems / 2), section: 0), at: .centeredHorizontally, animated: false)
+        }
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        //: Set the triangle in the middle tick
-        let totalNumberOfItems = self.collectionView.numberOfItems(inSection: 0)
-        self.collectionView.scrollToItem(at: IndexPath(item: totalNumberOfItems/2, section: 0), at: .right, animated: false)
     }
 
 }
@@ -83,29 +81,25 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-//        let totalCellWidth = 45 * collectionView.numberOfItems(inSection: 0)
-//        let totalSpacingWidth = 60
-//
-//        let leftInset = (collectionView.layer.frame.size.width - CGFloat(totalCellWidth + totalSpacingWidth)) / 2
-//        let rightInset = leftInset
-//
-//        return UIEdgeInsetsMake(0, leftInset, 0, rightInset)
-//    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        let customWidth = view.frame.width / 2
+        
+        return UIEdgeInsetsMake(0, customWidth - 22.4, 0, customWidth - 22)
+    }
 }
 
 extension ViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let intervals = currentPrice * 2 / 5
     
-        return Int(intervals + 1) //: Add one since need an extra cell for that accounts for the last interval
+        return Int(intervals) + 1 //: Add one since need an extra cell for that accounts for the last interval
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch indexPath.item {
         case 0:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: firstCell, for: indexPath) as! FirstCell
             return cell
-        case Int(currentPrice * 2 / 5):
+        case self.collectionView.numberOfItems(inSection: 0) - 1:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: lastCell, for: indexPath) as! LastCell
             cell.label.text = String(format: "%.0f", currentPrice * 2)
             return cell
@@ -125,10 +119,19 @@ extension ViewController {
     private func findCenterIndex() {
         let center = self.view.convert(self.collectionView.center, to: self.collectionView)
         let index = collectionView.indexPathForItem(at: center)
-        //: Force unwrapping for now will fix later
-        let cell = collectionView.cellForItem(at: index!) as! AlertCell
-        label.text = cell.label.text
         print(index ?? "index not found")
+        guard let validIndex = index else { return}
+        switch validIndex.item {
+        case 0:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: firstCell, for: validIndex) as! FirstCell
+            label.text = cell.label.text
+        case self.collectionView.numberOfItems(inSection: 0) - 1:
+            label.text = String(format: "%.0f", currentPrice * 2)
+        default:
+            if let cell = collectionView.cellForItem(at: validIndex) as? AlertCell {
+                label.text = cell.label.text
+            }
+        }
     }
     
 }
