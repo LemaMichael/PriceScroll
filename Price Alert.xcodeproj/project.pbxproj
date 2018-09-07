@@ -16,6 +16,7 @@
 		4C5715A72142181C00E06AAA /* FirstCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5715A62142181C00E06AAA /* FirstCell.swift */; };
 		4C5715A92142182400E06AAA /* LastCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5715A82142182400E06AAA /* LastCell.swift */; };
 		4CFDACA12142F6530060F171 /* PriceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CFDACA02142F6530060F171 /* PriceView.swift */; };
+		4CFDACA3214318E10060F171 /* TestInject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CFDACA2214318E10060F171 /* TestInject.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		4C5715A62142181C00E06AAA /* FirstCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstCell.swift; sourceTree = "<group>"; };
 		4C5715A82142182400E06AAA /* LastCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastCell.swift; sourceTree = "<group>"; };
 		4CFDACA02142F6530060F171 /* PriceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceView.swift; sourceTree = "<group>"; };
+		4CFDACA2214318E10060F171 /* TestInject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestInject.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 			isa = PBXGroup;
 			children = (
 				4C57158E2141EF5A00E06AAA /* AppDelegate.swift */,
+				4CFDACA2214318E10060F171 /* TestInject.swift */,
 				4CFDACA02142F6530060F171 /* PriceView.swift */,
 				4C5715902141EF5A00E06AAA /* ViewController.swift */,
 				4C5715A42141F17F00E06AAA /* AlertCell.swift */,
@@ -146,6 +149,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4CFDACA3214318E10060F171 /* TestInject.swift in Sources */,
 				4CFDACA12142F6530060F171 /* PriceView.swift in Sources */,
 				4C5715912141EF5A00E06AAA /* ViewController.swift in Sources */,
 				4C57158F2141EF5A00E06AAA /* AppDelegate.swift in Sources */,
