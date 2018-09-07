@@ -55,7 +55,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .gray
+        self.view.backgroundColor = UIColor(white: 0.85, alpha: 1)
         self.view.addSubview(priceView)
         self.view.addSubview(collectionView)
         collectionView.addSubview(imageView)
@@ -90,6 +90,12 @@ class ViewController: UIViewController {
     
     @objc func alertTapped() {
         print("Button tapped at value: " + scrollPrice)
+        //: This is a bad way to check, if the selected price is below or above the original price and will need to be changed
+        let additionalText = (priceView.belowLabel.textColor == blueColor) ? "below" : "above"
+        let alertController = UIAlertController(title: "Price Alert Created", message: "For value \(additionalText) " + scrollPrice, preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alertController.addAction(cancelAction)
+        present(alertController, animated: true, completion: nil)
     }
 }
 
